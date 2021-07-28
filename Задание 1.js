@@ -1,17 +1,21 @@
 let arr = [5, 7, 235, 0, 43242, 2, 1, null, 0, 0, 0, "sdadsadas", "sdasdadas"];
 
-let oddCount = 0;
-let evenCount = 0;
-let zeroCount = 0;
+let oddCount = 0, evenCount = 0, zeroCount = 0; // если объявляется несколько однотипных переменных сразу, можно использовать краткую форму записи
 
-function getCount() {
-    arr.forEach(function(item) {
-        if (item == null || typeof(item) == "string")  return false
-        if (item == 0) zeroCount++
-        else if (item % 2 !== 0) oddCount++
-        else if (item % 2 == 0)  evenCount++
+function getCount(array) {
+    array.forEach(function(item) {
+        if (typeof item === 'number' && !isNaN(item)) {
+            if (item == 0) zeroCount++
+            else if (item % 2 !== 0) oddCount++
+            else if (item % 2 == 0)  evenCount++
+        }
     });
     return console.log(`Четных чисел : ${evenCount}, нечетных : ${oddCount} и нулей : ${zeroCount}` )       
 };    
 
-getCount();
+getCount(arr);
+
+// В вашем решении есть несколько проблем:
+// 1. При проверке на тип вы отсеиваете только значения null и строки, хотя в условии сказано, что в массиве могут быть любые значения, т.е. если там будут булевы значения, undefined, NaN и т.д., код будет работать некорректно
+// 2. Функция в текущем виде не универсальна, т.к. она заточена на работу только с одним конкретным массивом. Главное преимущество использования функций - это возможность их переиспользования в разных частях кода. Поэтому правильнее было бы спроектировать функцию так, чтобы она принимала массив в качестве аргумента, тогда эту же функцию можно будет использовать и для других массивов.
+// Выше в коде исправила данные недочеты
